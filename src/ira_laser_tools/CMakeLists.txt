@@ -48,11 +48,22 @@ include_directories(
 )
 
 add_executable(laserscan_multi_merger src/laserscan_multi_merger.cpp)
-ament_target_dependencies(laserscan_multi_merger ${dependencies})
+target_link_libraries(laserscan_multi_merger
+  ${laser_geometry_TARGETS}
+  ${rclcpp_TARGETS}
+  ${sensor_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${tf2_ros_TARGETS}
+  ${pcl_conversions_TARGETS}
+  ${pcl_ros_TARGETS}
+)
 target_link_libraries(laserscan_multi_merger CloudPile ${PCL_LIBRARIES})
 
 add_library(CloudPile src/CloudPile.cpp)
-ament_target_dependencies(CloudPile rclcpp pcl_ros)
+target_link_libraries(CloudPile
+  ${rclcpp_TARGETS}
+  ${pcl_ros_TARGETS}
+)
 target_link_libraries(CloudPile ${PCL_LIBRARIES})
 
 #############
